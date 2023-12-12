@@ -27,7 +27,7 @@ export const blogSlice = createSlice({
       state.loading = false;
     },
     setBlog: (state, { payload }) => {
-    //   console.log(payload);
+      console.log(payload);
       state.blog = payload;
       state.loading = false;
       state.error = null;

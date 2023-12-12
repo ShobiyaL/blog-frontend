@@ -20,7 +20,6 @@ import { Link } from 'react-router-dom';
 import { viewBlog } from '../redux/actions/blogActions';
 
 const BlogCard = ({ blog }) => {
-  const dispatch = useDispatch();
   const MAX_DESCRIPTION_LENGTH = 100;
 
   const truncateDescription = (text) => {
@@ -30,9 +29,7 @@ const BlogCard = ({ blog }) => {
       return text.slice(0, MAX_DESCRIPTION_LENGTH) + '...';
     }
   };
-  // let handleClick = () => {
-  //   dispatch(viewBlog(blog._id));
-  // };
+
   return (
     <div>
       <Card maxW='sm'>
