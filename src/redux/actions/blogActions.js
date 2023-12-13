@@ -6,6 +6,7 @@ import {
   setBlog,
   setBlogs,
   setBlogFlag,
+  removeBlog,
 } from '../slices/blog';
 export const listCategories = () => async (dispatch) => {
   try {
@@ -90,15 +91,46 @@ export const allBlogs = () => async (dispatch) => {
 export const viewBlog = (id) => async (dispatch, getState) => {
   console.log(id, 'blog id');
   dispatch(setLoading(true));
-
   try {
     const response = await axios.get(
       `https://blog-backend-86a4.onrender.com/api/read/blog/${id}`
     );
     console.log(response);
-    dispatch(setBlog(response.data.blog));
+     dispatch(setBlog(response.data.blog));
 
     // dispatch(setBlogFlag());
+  } catch (error) {
+    console.log(error);
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'Error'
+      )
+    );
+  }
+};
+
+export const deleteBlog = (id) => async (dispatch, getState) => {
+  const {
+    user: { userInfo },
+  } = getState();
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.userData.token}`,
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.delete(
+      `https://blog-backend-86a4.onrender.com/api/v1/notes/${id}`,
+
+      config
+    );
+    // console.log(data.data);
+    dispatch(removeBlog(data.data));
   } catch (error) {
     console.log(error);
     dispatch(

@@ -40,6 +40,13 @@ export const blogSlice = createSlice({
       state.blogFlag = true;
       state.loading = false;
     },
+    removeBlog: (state, { payload }) => {
+      // console.log(payload);
+      let index = state.notes.findIndex((blog) => blog._id === payload._id);
+      if (index !== -1) {
+        state.notes = state.notes.filter((blog, i) => i !== index);
+      }
+    },
   },
 });
 
@@ -50,6 +57,7 @@ export const {
   setLoading,
   setCategories,
   setBlogFlag,
+  removeBlog
 } = blogSlice.actions;
 
 export default blogSlice.reducer;
